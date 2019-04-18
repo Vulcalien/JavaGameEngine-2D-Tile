@@ -11,8 +11,8 @@ import author.gamename.Game;
 
 public class InputHandler implements KeyListener, MouseListener {
 
-	public static enum Type {KEYBOARD, MOUSE}
-	public static enum Action {PRESS, RELEASE}
+	public static enum KeyType {KEYBOARD, MOUSE}
+	public static enum KeyAction {PRESS, RELEASE}
 
 	public static final List<Key> KEYBOARD_KEYS = new ArrayList<Key>();
 	public static final List<Key> MOUSE_KEYS = new ArrayList<Key>();
@@ -34,15 +34,15 @@ public class InputHandler implements KeyListener, MouseListener {
 		}
 	}
 
-	private static void receiveInput(Action action, Type type, int code) {
+	private static void receiveInput(KeyAction action, KeyType type, int code) {
 		List<Key> keys = getList(type);
 		for(int i = 0; i < keys.size(); i++) {
 			Key key = keys.get(i);
 			if(key.code == code) {
 
-				if(action == Action.PRESS) {
+				if(action == KeyAction.PRESS) {
 					key.isKeyDown = true;
-				} else if(action == Action.RELEASE) {
+				} else if(action == KeyAction.RELEASE) {
 					key.isReleased = true;
 				}
 
@@ -51,7 +51,7 @@ public class InputHandler implements KeyListener, MouseListener {
 		}
 	}
 
-	private static List<Key> getList(Type type) {
+	private static List<Key> getList(KeyType type) {
 		switch(type) {
 			case KEYBOARD:
 				return KEYBOARD_KEYS;
@@ -68,22 +68,22 @@ public class InputHandler implements KeyListener, MouseListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		receiveInput(Action.PRESS, Type.KEYBOARD, e.getKeyCode());
+		receiveInput(KeyAction.PRESS, KeyType.KEYBOARD, e.getKeyCode());
 	}
 
 	public void keyReleased(KeyEvent e) {
-		receiveInput(Action.RELEASE, Type.KEYBOARD, e.getKeyCode());
+		receiveInput(KeyAction.RELEASE, KeyType.KEYBOARD, e.getKeyCode());
 	}
 
 	public void mouseClicked(MouseEvent e) {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		receiveInput(Action.PRESS, Type.MOUSE, e.getButton());
+		receiveInput(KeyAction.PRESS, KeyType.MOUSE, e.getButton());
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		receiveInput(Action.RELEASE, Type.MOUSE, e.getButton());
+		receiveInput(KeyAction.RELEASE, KeyType.MOUSE, e.getButton());
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -94,18 +94,18 @@ public class InputHandler implements KeyListener, MouseListener {
 
 	public static class Key {
 
-		private Type type;
+		private KeyType type;
 		private int code;
 
 		private boolean isKeyDown = false;
 		private boolean wasKeyDown = false;
 		private boolean isReleased = false;
 
-		public Key(Type type, int code) {
+		public Key(KeyType type, int code) {
 			init(type, code);
 		}
 
-		private void init(Type type, int code) {
+		private void init(KeyType type, int code) {
 			this.type = type;
 			this.code = code;
 			getList(type).add(this);
@@ -119,7 +119,7 @@ public class InputHandler implements KeyListener, MouseListener {
 			}
 		}
 
-		public void setKeyBinding(Type newType, int newCode) {
+		public void setKeyBinding(KeyType newType, int newCode) {
 			getList(this.type).remove(this);
 			init(newType, newCode);
 		}

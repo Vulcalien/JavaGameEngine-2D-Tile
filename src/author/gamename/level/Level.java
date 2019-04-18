@@ -38,6 +38,7 @@ public class Level {
 			e.tick();
 
 			if(e.removed) {
+				removeEntityFromTile(e, xt0, yt0);
 				removeEntity(e);
 				i--;
 			} else {

@@ -1,5 +1,6 @@
 package author.gamename.level.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import author.gamename.Game;
@@ -25,17 +26,11 @@ public class Entity {
 	}
 
 	public boolean[] move(int xm, int ym) {
-		int x0 = x;
-		int y0 = y;
+		List<Entity> touchedEntities = new ArrayList<Entity>();
 
-		boolean xMoved = move2(xm, 0);
-		boolean yMoved = move2(0, ym);
+		boolean xMoved = move2(xm, 0, touchedEntities);
+		boolean yMoved = move2(0, ym, touchedEntities);
 
-		//xm and ym may have changed in move2
-		xm = x - x0;
-		ym = y - y0;
-
-		List<Entity> touchedEntities = level.getEntities(x - xr + xm, y - yr + ym, x + xr - 1 + xm, y + yr - 1 + ym);
 		for(int i = 0; i < touchedEntities.size(); i++) {
 			Entity e = touchedEntities.get(i);
 			e.touchedBy(this);
@@ -45,7 +40,7 @@ public class Entity {
 	}
 
 	//returns false if totally blocked by something and no movement is made
-	private boolean move2(int xm, int ym) {
+	private boolean move2(int xm, int ym, List<Entity> touchedEntities) {
 		if(xm == 0 && ym == 0) return true;
 		if(xm != 0 && ym != 0) throw new RuntimeException("Error: move2 moves only in one axis");
 
@@ -102,6 +97,11 @@ public class Entity {
 		}
 
 		List<Entity> entities = level.getEntities(x0 + xm, y0 + ym, x1 + xm, y1 + ym);
+		for(int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			if(!touchedEntities.contains(e)) touchedEntities.add(e);
+		}
+
 		List<Entity> wasInside = level.getEntities(x0, y0, x1, y1);
 		entities.removeAll(wasInside);
 
