@@ -101,6 +101,9 @@ public class InputHandler implements KeyListener, MouseListener {
 		private boolean wasKeyDown = false;
 		private boolean isReleased = false;
 
+		public Key() {
+		}
+
 		public Key(KeyType type, int code) {
 			init(type, code);
 		}
@@ -120,7 +123,7 @@ public class InputHandler implements KeyListener, MouseListener {
 		}
 
 		public void setKeyBinding(KeyType newType, int newCode) {
-			getList(this.type).remove(this);
+			if(this.type != null) getList(this.type).remove(this);
 			init(newType, newCode);
 		}
 
