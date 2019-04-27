@@ -21,7 +21,7 @@ public class Tile {
 		TILES[id] = this;
 	}
 
-	public void render(Screen screen, int xt, int yt) {
+	public void render(Screen screen, Level level, int xt, int yt) {
 	}
 
 	public boolean mayPass(Entity e, int xm, int ym, Level level, int xt, int yt) {
