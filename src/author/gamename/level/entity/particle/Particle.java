@@ -2,7 +2,7 @@ package author.gamename.level.entity.particle;
 
 import author.gamename.level.entity.Entity;
 
-public class Particle extends Entity {
+public abstract class Particle extends Entity {
 
 	public final int lifeTime;
 	public int remainingTime;

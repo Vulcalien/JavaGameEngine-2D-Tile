@@ -8,7 +8,7 @@ import author.gamename.gfx.Screen;
 import author.gamename.level.Level;
 import author.gamename.level.tile.Tile;
 
-public class Entity {
+public abstract class Entity {
 
 	public static final int T_SIZE = Game.T_SIZE;
 
