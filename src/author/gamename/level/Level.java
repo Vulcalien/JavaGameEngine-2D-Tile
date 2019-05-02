@@ -1,3 +1,7 @@
+/*******************************************************************************
+ * Copyright (C) 2019 Vulcalien
+ * This code or part of it is licensed under MIT License by Vulcalien
+ ******************************************************************************/
 package author.gamename.level;
 
 import java.util.ArrayList;
