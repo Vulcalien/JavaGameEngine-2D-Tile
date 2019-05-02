@@ -100,7 +100,7 @@ public abstract class Entity {
 			blocked = false;
 		}
 
-		//FIX it is possible that entity doesn't touch all the entities because one of them blocks it
+		//BUG it is possible that entity doesn't touch all the entities because one of them blocks it
 		//maybe it could be fixed moving this code in Entity.move()
 		//and add to touchedEntities the one who blocks it
 		List<Entity> entities = level.getEntities(x0 + xm, y0 + ym, x1 + xm, y1 + ym);
@@ -112,6 +112,7 @@ public abstract class Entity {
 		List<Entity> wasInside = level.getEntities(x0, y0, x1, y1);
 		entities.removeAll(wasInside);
 
+		//BUG if entity is blocked by many entities, it may pass on one of them (not considering if solid or not)
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			if(e == this) continue;
