@@ -35,6 +35,10 @@ public abstract class Entity {
 		boolean xMoved = move2(xm, 0, touchedEntities);
 		boolean yMoved = move2(0, ym, touchedEntities);
 
+		List<Entity> isInside = level.getEntities(x - xr, y - yr, x + xr - 1, y + yr - 1);
+		isInside.remove(this);
+		touchedEntities.addAll(isInside);
+
 		for(int i = 0; i < touchedEntities.size(); i++) {
 			Entity e = touchedEntities.get(i);
 			e.touchedBy(this);
@@ -48,14 +52,6 @@ public abstract class Entity {
 		if(xm == 0 && ym == 0) return true;
 		if(xm != 0 && ym != 0) throw new RuntimeException("Error: move2 moves only in one axis");
 
-		boolean blocked = false;
-
-		//will be set just if a tile blocks the movement
-		int xBlockTile = -1, yBlockTile = -1;
-
-		//will be set just if an entity blocks the movement
-		Entity blockEntity = null;
-
 		int x0 = x - xr;
 		int y0 = y - yr;
 		int x1 = x + xr - 1;
@@ -65,6 +61,9 @@ public abstract class Entity {
 		int yto0 = (y0 + ym) >> T_SIZE;
 		int xto1 = (x1 + xm) >> T_SIZE;
 		int yto1 = (y1 + ym) >> T_SIZE;
+
+		boolean blocked = false;
+		int xBlockTile = -1, yBlockTile = -1;
 
 		main_loop:
 		for(int yt = yto0; yt <= yto1; yt++) {
@@ -100,30 +99,81 @@ public abstract class Entity {
 			blocked = false;
 		}
 
-		//BUG it is possible that entity doesn't touch all the entities because one of them blocks it
-		//maybe it could be fixed moving this code in Entity.move()
-		//and add to touchedEntities the one who blocks it
-		List<Entity> entities = level.getEntities(x0 + xm, y0 + ym, x1 + xm, y1 + ym);
-		for(int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
-			if(!touchedEntities.contains(e)) touchedEntities.add(e);
-		}
-
+		List<Entity> isInside = level.getEntities(x0 + xm, y0 + ym, x1 + xm, y1 + ym);
 		List<Entity> wasInside = level.getEntities(x0, y0, x1, y1);
-		entities.removeAll(wasInside);
+		isInside.removeAll(wasInside);
 
-		//BUG if entity is blocked by many entities, it may pass on one of them (not considering if solid or not)
-		for(int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		List<Entity> blockingEntities = new ArrayList<Entity>();
+
+		for(int i = 0; i < isInside.size(); i++) {
+			Entity e = isInside.get(i);
 			if(e == this) continue;
 
 			if(this.isBlockedBy(e) && e.blocks(this)) {
 				blocked = true;
-				blockEntity = e;
+				blockingEntities.add(e);
 			}
 		}
 
 		if(blocked) {
+			Entity blockEntity = null;
+			List<Entity> touchedBlockingEntities = new ArrayList<Entity>();
+			for(int i = 0; i < blockingEntities.size(); i++) {
+				Entity e = blockingEntities.get(i);
+
+				if(blockEntity == null) {
+					blockEntity = e;
+					touchedBlockingEntities.add(e);
+				} else {
+					if(xm != 0) {
+						if(xm < 0) {
+							int xb0 = e.x + e.xr;
+							int xb1 = blockEntity.x + blockEntity.xr;
+							if(xb0 > xb1) {
+								blockEntity = e;
+								touchedBlockingEntities.clear();
+								touchedBlockingEntities.add(e);
+							} else if(xb0 == xb1) {
+								touchedBlockingEntities.add(e);
+							}
+						} else {
+							int xb0 = e.x - e.xr;
+							int xb1 = blockEntity.x - blockEntity.xr;
+							if(xb0 < xb1) {
+								blockEntity = e;
+								touchedBlockingEntities.clear();
+								touchedBlockingEntities.add(e);
+							} else if(xb0 == xb1) {
+								touchedBlockingEntities.add(e);
+							}
+						}
+					} else {
+						if(ym < 0) {
+							int yb0 = e.y + e.yr;
+							int yb1 = blockEntity.y + blockEntity.yr;
+							if(yb0 > yb1) {
+								blockEntity = e;
+								touchedBlockingEntities.clear();
+								touchedBlockingEntities.add(e);
+							} else if(yb0 == yb1) {
+								touchedBlockingEntities.add(e);
+							}
+						} else {
+							int yb0 = e.y - e.yr;
+							int yb1 = blockEntity.y - blockEntity.yr;
+							if(yb0 < yb1) {
+								blockEntity = e;
+								touchedBlockingEntities.clear();
+								touchedBlockingEntities.add(e);
+							} else if(yb0 == yb1) {
+								touchedBlockingEntities.add(e);
+							}
+						}
+					}
+				}
+			}
+			touchedEntities.addAll(touchedBlockingEntities);
+
 			if(xm != 0) {
 				if(xm < 0) xm = (blockEntity.x + blockEntity.xr) - x0;
 				else xm = (blockEntity.x - blockEntity.xr) - x1 - 1;
