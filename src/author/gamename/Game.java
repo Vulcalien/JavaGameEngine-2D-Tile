@@ -27,9 +27,6 @@ public class Game extends Canvas implements Runnable {
 	//the number of JFrame's pixels that correspond to 1 pixel of the game screen
 	public static final int SCALE = 1;
 
-	//Tile size: the number of pixels of a tile is 2^T_SIZE
-	public static final int T_SIZE = 5;
-
 	private final BufferedImage img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private final int[] pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 
@@ -57,7 +54,6 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 
 	private void init() {
 		InputHandler.init(this);

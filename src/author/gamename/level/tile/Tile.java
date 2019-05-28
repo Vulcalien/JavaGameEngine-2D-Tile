@@ -4,14 +4,11 @@
  ******************************************************************************/
 package author.gamename.level.tile;
 
-import author.gamename.Game;
 import author.gamename.gfx.Screen;
 import author.gamename.level.Level;
 import author.gamename.level.entity.Entity;
 
 public abstract class Tile {
-
-	public static final int T_SIZE = Game.T_SIZE;
 
 	public static final Tile[] TILES = new Tile[128];
 

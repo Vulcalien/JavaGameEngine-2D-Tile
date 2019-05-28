@@ -7,14 +7,14 @@ package author.gamename.level;
 import java.util.ArrayList;
 import java.util.List;
 
-import author.gamename.Game;
 import author.gamename.gfx.Screen;
 import author.gamename.level.entity.Entity;
 import author.gamename.level.tile.Tile;
 
 public class Level {
 
-	public static final int T_SIZE = Game.T_SIZE;
+	//Tile size: the number of pixels of a tile is 2^T_SIZE
+	private static final int T_SIZE = 32;
 
 	public final int width, height;
 	public final byte[] tiles;
@@ -36,8 +36,8 @@ public class Level {
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 
-			int xt0 = e.x >> T_SIZE;
-			int yt0 = e.y >> T_SIZE;
+			int xt0 = posToTile(e.x);
+			int yt0 = posToTile(e.y);
 
 			e.tick();
 
@@ -46,8 +46,8 @@ public class Level {
 				removeEntity(e);
 				i--;
 			} else {
-				int xt1 = e.x >> T_SIZE;
-				int yt1 = e.y >> T_SIZE;
+				int xt1 = posToTile(e.x);
+				int yt1 = posToTile(e.y);
 
 				if(xt1 != xt0 || yt1 != yt0) {
 					removeEntityFromTile(e, xt0, yt0);
@@ -60,8 +60,8 @@ public class Level {
 	public void render(Screen screen, int xTiles, int yTiles) {
 		//set screen's offset
 
-		int xt0 = (screen.xOffset) >> T_SIZE;
-		int yt0 = (screen.yOffset) >> T_SIZE;
+		int xt0 = posToTile(screen.xOffset);
+		int yt0 = posToTile(screen.yOffset);
 		int xt1 = xt0 + xTiles;
 		int yt1 = yt0 + yTiles;
 
@@ -93,14 +93,14 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		entities.add(e);
-		insertEntityInTile(e, e.x >> T_SIZE, e.y >> T_SIZE);
+		insertEntityInTile(e, posToTile(e.x), posToTile(e.y));
 		e.removed = false;
 		e.level = this;
 	}
 
 	public void removeEntity(Entity e) {
 		entities.remove(e);
-		removeEntityFromTile(e, e.y >> T_SIZE, e.y >> T_SIZE);
+		removeEntityFromTile(e, posToTile(e.y), posToTile(e.y));
 		e.removed = true;
 	}
 
@@ -117,10 +117,10 @@ public class Level {
 	public List<Entity> getEntities(int x0, int y0, int x1, int y1) {
 		List<Entity> result = new ArrayList<Entity>();
 
-		int xt0 = (x0 >> T_SIZE) - 1;
-		int yt0 = (y0 >> T_SIZE) - 1;
-		int xt1 = (x1 >> T_SIZE) + 1;
-		int yt1 = (y1 >> T_SIZE) + 1;
+		int xt0 = posToTile(x0) - 1;
+		int yt0 = posToTile(y0) - 1;
+		int xt1 = posToTile(x1) + 1;
+		int yt1 = posToTile(y1) + 1;
 
 		for(int yt = yt0; yt <= yt1; yt++) {
 			if(yt < 0 || yt >= height) continue;
@@ -151,6 +151,14 @@ public class Level {
 			}
 		}
 		return result;
+	}
+
+	public static int tileToPos(int tile) {
+		return tile * T_SIZE;
+	}
+
+	public static int posToTile(int pos) {
+		return Math.floorDiv(pos, T_SIZE);
 	}
 
 }

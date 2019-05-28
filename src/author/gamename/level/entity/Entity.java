@@ -7,14 +7,11 @@ package author.gamename.level.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import author.gamename.Game;
 import author.gamename.gfx.Screen;
 import author.gamename.level.Level;
 import author.gamename.level.tile.Tile;
 
 public abstract class Entity {
-
-	public static final int T_SIZE = Game.T_SIZE;
 
 	public Level level;
 	public boolean removed = false;
@@ -57,10 +54,10 @@ public abstract class Entity {
 		int x1 = x + xr - 1;
 		int y1 = y + yr - 1;
 
-		int xto0 = (x0 + xm) >> T_SIZE;
-		int yto0 = (y0 + ym) >> T_SIZE;
-		int xto1 = (x1 + xm) >> T_SIZE;
-		int yto1 = (y1 + ym) >> T_SIZE;
+		int xto0 = Level.posToTile(x0 + xm);
+		int yto0 = Level.posToTile(y0 + ym);
+		int xto1 = Level.posToTile(x1 + xm);
+		int yto1 = Level.posToTile(y1 + ym);
 
 		boolean blocked = false;
 		int xBlockTile = -1, yBlockTile = -1;
@@ -88,11 +85,11 @@ public abstract class Entity {
 
 		if(blocked) {
 			if(xm != 0) {
-				if(xm < 0) xm = ((xBlockTile + 1) << T_SIZE) - x0;
-				else xm = (xBlockTile << T_SIZE) - x1 - 1;
+				if(xm < 0) xm = Level.tileToPos(xBlockTile + 1) - x0;
+				else xm = Level.tileToPos(xBlockTile) - x1 - 1;
 			} else {
-				if(ym < 0) ym = ((yBlockTile + 1) << T_SIZE) - y0;
-				else ym = (yBlockTile << T_SIZE) - y1 - 1;
+				if(ym < 0) ym = Level.tileToPos(yBlockTile + 1) - y0;
+				else ym = Level.tileToPos(yBlockTile) - y1 - 1;
 			}
 
 			if(xm == 0 && ym == 0) return false;
