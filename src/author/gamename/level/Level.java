@@ -7,6 +7,7 @@ package author.gamename.level;
 import java.util.ArrayList;
 import java.util.List;
 
+import author.gamename.Game;
 import author.gamename.gfx.Screen;
 import author.gamename.level.entity.Entity;
 import author.gamename.level.tile.Tile;
@@ -16,13 +17,16 @@ public class Level {
 	//Tile size: the number of pixels of a tile is 2^T_SIZE
 	private static final int T_SIZE = 32;
 
+	public final Game game;
+
 	public final int width, height;
 	public final byte[] tiles;
 	public final List<Entity> entities = new ArrayList<Entity>();
 	public final List<Entity>[] entitiesInTile;
 
 	@SuppressWarnings("unchecked")
-	public Level(int width, int height) {
+	public Level(Game game, int width, int height) {
+		this.game = game;
 		this.width = width;
 		this.height = height;
 		this.tiles = new byte[width * height];

@@ -18,18 +18,17 @@ public class InputHandler implements KeyListener, MouseListener {
 	public static enum KeyType {KEYBOARD, MOUSE}
 	public static enum KeyAction {PRESS, RELEASE}
 
-	public static final List<Key> KEYBOARD_KEYS = new ArrayList<Key>();
-	public static final List<Key> MOUSE_KEYS = new ArrayList<Key>();
+	private final List<Key> KEYBOARD_KEYS = new ArrayList<Key>();
+	private final List<Key> MOUSE_KEYS = new ArrayList<Key>();
 
-	public static void init(Game game) {
-		InputHandler instance = new InputHandler();
-		game.addKeyListener(instance);
-		game.addMouseListener(instance);
+	public void init(Game game) {
+		game.addKeyListener(this);
+		game.addMouseListener(this);
 
 		game.requestFocus();
 	}
 
-	public static void tick() {
+	public void tick() {
 		for(int i = 0; i < KEYBOARD_KEYS.size(); i++) {
 			KEYBOARD_KEYS.get(i).tick();
 		}
@@ -38,7 +37,7 @@ public class InputHandler implements KeyListener, MouseListener {
 		}
 	}
 
-	private static void receiveInput(KeyAction action, KeyType type, int code) {
+	private void receiveInput(KeyAction action, KeyType type, int code) {
 		List<Key> keys = getList(type);
 		for(int i = 0; i < keys.size(); i++) {
 			Key key = keys.get(i);
@@ -49,13 +48,11 @@ public class InputHandler implements KeyListener, MouseListener {
 				} else if(action == KeyAction.RELEASE) {
 					key.isReleased = true;
 				}
-
-				return;
 			}
 		}
 	}
 
-	private static List<Key> getList(KeyType type) {
+	private List<Key> getList(KeyType type) {
 		switch(type) {
 			case KEYBOARD:
 				return KEYBOARD_KEYS;
@@ -96,7 +93,7 @@ public class InputHandler implements KeyListener, MouseListener {
 	public void mouseExited(MouseEvent e) {
 	}
 
-	public static class Key {
+	public class Key {
 
 		private KeyType type;
 		private int code;

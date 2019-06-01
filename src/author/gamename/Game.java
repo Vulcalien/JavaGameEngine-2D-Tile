@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	private final BufferedImage img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private final int[] pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 
+	public final InputHandler input = new InputHandler();
 	private final Screen screen = new Screen(this);
 
 	public Level level;
@@ -56,14 +57,14 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void init() {
-		InputHandler.init(this);
+		input.init(this);
 	}
 
 	private void tick() {
 		if(level != null) level.tick();
 
 		//must tick the last
-		InputHandler.tick();
+		input.tick();
 	}
 
 	private void render() {
