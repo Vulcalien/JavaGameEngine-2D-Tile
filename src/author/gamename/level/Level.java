@@ -15,7 +15,7 @@ import author.gamename.level.tile.Tile;
 public class Level {
 
 	//Tile size: the number of pixels per tile
-	private static final int T_SIZE = 32;
+	public static final int T_SIZE = 32;
 
 	public final Game game;
 
