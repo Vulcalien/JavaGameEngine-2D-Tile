@@ -49,6 +49,9 @@ public abstract class Entity {
 		if(xm == 0 && ym == 0) return true;
 		if(xm != 0 && ym != 0) throw new RuntimeException("Error: move2 moves only in one axis");
 
+		int xtc = Level.posToTile(x);
+		int ytc = Level.posToTile(y);
+
 		int x0 = x - xr;
 		int y0 = y - yr;
 		int x1 = x + xr - 1;
@@ -62,7 +65,6 @@ public abstract class Entity {
 		boolean blocked = false;
 		int xBlockTile = -1, yBlockTile = -1;
 
-		main_loop:
 		for(int yt = yto0; yt <= yto1; yt++) {
 			for(int xt = xto0; xt <= xto1; xt++) {
 				Tile tile = null;
@@ -75,10 +77,16 @@ public abstract class Entity {
 				}
 
 				if(isOutOfLevel || !tile.mayPass(this, xm, ym, level, xt, yt)) {
-					blocked = true;
-					xBlockTile = xt;
-					yBlockTile = yt;
-					break main_loop;
+					if(blocked) {
+						if(Math.abs(xt - xtc) < Math.abs(xBlockTile - xtc) || Math.abs(yt - ytc) < Math.abs(yBlockTile - ytc)) {
+							xBlockTile = xt;
+							yBlockTile = yt;
+						}
+					} else {
+						blocked = true;
+						xBlockTile = xt;
+						yBlockTile = yt;
+					}
 				}
 			}
 		}
