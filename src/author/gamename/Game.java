@@ -21,10 +21,10 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	//the size of the game screen (not the JFrame)
+	// the size of the game screen (not the JFrame)
 	public static final int WIDTH = 320, HEIGHT = 320;
 
-	//the number of JFrame's pixels that correspond to 1 pixel of the game screen
+	// the number of JFrame's pixels that correspond to 1 pixel of the game screen
 	public static final int SCALE = 1;
 
 	private final BufferedImage img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -49,7 +49,6 @@ public class Game extends Canvas implements Runnable {
 		if(!running) return;
 		running = false;
 		try {
-			//wait for the thread to die
 			thread.join();
 		} catch(InterruptedException e) {
 			e.printStackTrace();
@@ -63,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 	private void tick() {
 		if(level != null) level.tick();
 
-		//must tick the last
+		// must be the last to tick
 		input.tick();
 	}
 

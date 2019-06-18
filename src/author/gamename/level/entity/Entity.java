@@ -17,7 +17,7 @@ public abstract class Entity {
 	public boolean removed = false;
 
 	public int x, y;
-	//xr is half of the width, yr is half of the height
+	// xr is half of the width, yr is half of the height
 	public int xr, yr;
 
 	public void tick() {
@@ -44,7 +44,7 @@ public abstract class Entity {
 		return new boolean[] {xMoved, yMoved};
 	}
 
-	//returns false if totally blocked by something and no movement is made
+	// returns false if totally blocked by something and no movement is made
 	private boolean move2(int xm, int ym, List<Entity> touchedEntities) {
 		if(xm == 0 && ym == 0) return true;
 		if(xm != 0 && ym != 0) throw new RuntimeException("Error: move2 moves only in one axis");
@@ -78,7 +78,8 @@ public abstract class Entity {
 
 				if(isOutOfLevel || !tile.mayPass(this, xm, ym, level, xt, yt)) {
 					if(blocked) {
-						if(Math.abs(xt - xtc) < Math.abs(xBlockTile - xtc) || Math.abs(yt - ytc) < Math.abs(yBlockTile - ytc)) {
+						if(Math.abs(xt - xtc) < Math.abs(xBlockTile - xtc)
+						   || Math.abs(yt - ytc) < Math.abs(yBlockTile - ytc)) {
 							xBlockTile = xt;
 							yBlockTile = yt;
 						}

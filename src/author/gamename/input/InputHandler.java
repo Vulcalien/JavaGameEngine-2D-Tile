@@ -15,8 +15,13 @@ import author.gamename.Game;
 
 public class InputHandler implements KeyListener, MouseListener {
 
-	public static enum KeyType {KEYBOARD, MOUSE}
-	public static enum KeyAction {PRESS, RELEASE}
+	public static enum KeyType {
+		KEYBOARD, MOUSE
+	}
+
+	public static enum KeyAction {
+		PRESS, RELEASE
+	}
 
 	private final List<Key> KEYBOARD_KEYS = new ArrayList<Key>();
 	private final List<Key> MOUSE_KEYS = new ArrayList<Key>();

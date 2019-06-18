@@ -14,7 +14,7 @@ import author.gamename.level.tile.Tile;
 
 public class Level {
 
-	//Tile size: the number of pixels per tile
+	// Tile size: the number of pixels per tile
 	public static final int T_SIZE = 32;
 
 	public final Game game;
@@ -62,7 +62,7 @@ public class Level {
 	}
 
 	public void render(Screen screen, int xTiles, int yTiles) {
-		//set screen's offset
+		// set screen's offset
 
 		int xt0 = posToTile(screen.xOffset);
 		int yt0 = posToTile(screen.yOffset);
