@@ -11,7 +11,7 @@ import vulc.bitmap.Font;
 
 public class Screen extends Bitmap {
 
-	public static final Font FONT = new Font(Screen.class.getResourceAsStream("/fonts/non-monospaced.lwfont"));
+	public static final Font FONT = new Font(Screen.class.getResourceAsStream("/fonts/linkwriter-monospaced.lwfont"));
 
 	private static final int BACKGROUND_COLOR = 0x000000;
 
