@@ -7,9 +7,10 @@ package author.gamename.gfx;
 import author.gamename.Game;
 import author.gamename.level.Level;
 import vulc.bitmap.Bitmap;
-import vulc.bitmap.Font;
+import vulc.bitmap.IntBitmap;
+import vulc.bitmap.font.Font;
 
-public class Screen extends Bitmap {
+public class Screen extends IntBitmap {
 
 	public static final Font FONT = new Font(Screen.class.getResourceAsStream("/fonts/linkwriter-monospaced.lwfont"));
 
@@ -38,7 +39,7 @@ public class Screen extends Bitmap {
 		this.yOffset = y;
 	}
 
-	public void renderSprite(Bitmap sprite, int x, int y) {
+	public void renderSprite(Bitmap<Integer> sprite, int x, int y) {
 		draw(sprite, x - xOffset, y - yOffset);
 	}
 
