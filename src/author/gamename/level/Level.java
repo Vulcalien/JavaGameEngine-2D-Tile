@@ -62,12 +62,12 @@ public class Level {
 	}
 
 	public void render(Screen screen, int xTiles, int yTiles) {
-		// set screen's offset
+		// TODO set screen's offset
 
 		int xt0 = posToTile(screen.xOffset);
 		int yt0 = posToTile(screen.yOffset);
-		int xt1 = xt0 + xTiles;
-		int yt1 = yt0 + yTiles;
+		int xt1 = xt0 + xTiles - 1;
+		int yt1 = yt0 + yTiles - 1;
 
 		for(int yt = yt0; yt <= yt1; yt++) {
 			if(yt < 0 || yt >= height) continue;
