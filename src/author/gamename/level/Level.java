@@ -108,12 +108,12 @@ public class Level {
 		e.removed = true;
 	}
 
-	public void insertEntityInTile(Entity e, int xt, int yt) {
+	private void insertEntityInTile(Entity e, int xt, int yt) {
 		if(xt < 0 || xt >= width || yt < 0 || yt >= height) return;
 		entitiesInTile[xt + yt * width].add(e);
 	}
 
-	public void removeEntityFromTile(Entity e, int xt, int yt) {
+	private void removeEntityFromTile(Entity e, int xt, int yt) {
 		if(xt < 0 || xt >= width || yt < 0 || yt >= height) return;
 		entitiesInTile[xt + yt * width].remove(e);
 	}
