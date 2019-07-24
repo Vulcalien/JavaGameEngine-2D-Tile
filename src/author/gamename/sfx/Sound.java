@@ -39,6 +39,7 @@ public class Sound {
 
 	public void loop() {
 		if(clip == null) return;
+		clip.setFramePosition(0);
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
