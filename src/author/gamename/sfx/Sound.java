@@ -4,8 +4,6 @@
  ******************************************************************************/
 package author.gamename.sfx;
 
-import java.net.URL;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -21,19 +19,20 @@ public class Sound {
 
 	private Clip clip;
 
-	public Sound(URL url) {
+	public Sound(String file) {
 		try {
 			Clip clip = (Clip) MIXER.getLine(new DataLine.Info(Clip.class, null));
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(Sound.class.getResource(file));
 			clip.open(audioStream);
 			this.clip = clip;
 		} catch(Exception e) {
-			e.printStackTrace();
+			System.out.println("Error: could not load sound: " + file);
 		}
 	}
 
 	public void play() {
 		if(clip == null) return;
+		clip.stop();
 		clip.setFramePosition(0);
 		clip.start();
 	}
