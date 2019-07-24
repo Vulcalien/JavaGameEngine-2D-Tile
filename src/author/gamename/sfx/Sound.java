@@ -4,19 +4,28 @@
  ******************************************************************************/
 package author.gamename.sfx;
 
+import java.net.URL;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Mixer;
 
 public class Sound {
 
+	private final static Mixer MIXER;
+	static {
+		MIXER = AudioSystem.getMixer(AudioSystem.getMixerInfo()[0]);
+	}
+
 	private Clip clip;
 
-	public Sound(String file) {
+	public Sound(URL url) {
 		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(Sound.class.getResource(file));
-			Clip clip = AudioSystem.getClip();
-			clip.open(ais);
+			Clip clip = (Clip) MIXER.getLine(new DataLine.Info(Clip.class, null));
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+			clip.open(audioStream);
 			this.clip = clip;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -25,20 +34,13 @@ public class Sound {
 
 	public void play() {
 		if(clip == null) return;
-		if(clip.isRunning()) clip.stop();
 		clip.setFramePosition(0);
 		clip.start();
 	}
 
-	public void loop(int count) {
-		if(clip == null) return;
-		if(clip.isRunning()) clip.stop();
-		clip.setFramePosition(0);
-		clip.loop(count);
-	}
-
 	public void loop() {
-		loop(Clip.LOOP_CONTINUOUSLY);
+		if(clip == null) return;
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
 	public void stop() {
