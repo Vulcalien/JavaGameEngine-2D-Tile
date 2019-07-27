@@ -60,10 +60,9 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		if(level != null) level.tick();
-
-		// must be the last to tick
 		input.tick();
+
+		if(level != null) level.tick();
 	}
 
 	private void render() {
