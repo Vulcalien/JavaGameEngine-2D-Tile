@@ -4,6 +4,8 @@
  ******************************************************************************/
 package author.gamename.sfx;
 
+import java.io.File;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -14,7 +16,7 @@ public class Sound {
 
 	public Sound(String file) {
 		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream(file));
+			AudioInputStream ais = AudioSystem.getAudioInputStream(new File(file));
 			Clip clip = AudioSystem.getClip();
 			clip.open(ais);
 			this.clip = clip;
