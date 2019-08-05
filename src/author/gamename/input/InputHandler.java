@@ -23,8 +23,9 @@ public class InputHandler implements KeyListener, MouseListener {
 		PRESS, RELEASE
 	}
 
-	private final List<Key> KEYBOARD_KEYS = new ArrayList<Key>();
-	private final List<Key> MOUSE_KEYS = new ArrayList<Key>();
+	private final List<Key> keys = new ArrayList<Key>();
+	private final List<Key> keyboardKeys = new ArrayList<Key>();
+	private final List<Key> mouseKeys = new ArrayList<Key>();
 
 	public void init(Game game) {
 		game.addKeyListener(this);
@@ -34,11 +35,8 @@ public class InputHandler implements KeyListener, MouseListener {
 	}
 
 	public void tick() {
-		for(int i = 0; i < KEYBOARD_KEYS.size(); i++) {
-			KEYBOARD_KEYS.get(i).tick();
-		}
-		for(int i = 0; i < MOUSE_KEYS.size(); i++) {
-			MOUSE_KEYS.get(i).tick();
+		for(int i = 0; i < keys.size(); i++) {
+			keys.get(i).tick();
 		}
 	}
 
@@ -60,10 +58,10 @@ public class InputHandler implements KeyListener, MouseListener {
 	private List<Key> getList(KeyType type) {
 		switch(type) {
 			case KEYBOARD:
-				return KEYBOARD_KEYS;
+				return keyboardKeys;
 
 			case MOUSE:
-				return MOUSE_KEYS;
+				return mouseKeys;
 
 			default:
 				return null;
@@ -121,6 +119,8 @@ public class InputHandler implements KeyListener, MouseListener {
 		private void init(KeyType type, int code) {
 			this.type = type;
 			this.code = code;
+
+			keys.add(this);
 			getList(type).add(this);
 		}
 
