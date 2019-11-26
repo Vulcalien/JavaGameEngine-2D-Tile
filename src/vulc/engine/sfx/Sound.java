@@ -2,7 +2,7 @@
  * Copyright (C) 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
-package author.gamename.sfx;
+package vulc.engine.sfx;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;

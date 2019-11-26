@@ -2,13 +2,13 @@
  * Copyright (C) 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
-package author.gamename.gfx;
+package vulc.engine.gfx;
 
-import author.gamename.Game;
-import author.gamename.level.Level;
 import vulc.bitmap.Bitmap;
 import vulc.bitmap.IntBitmap;
 import vulc.bitmap.font.Font;
+import vulc.engine.Game;
+import vulc.engine.level.Level;
 
 public class Screen extends IntBitmap {
 

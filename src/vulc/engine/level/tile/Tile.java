@@ -2,11 +2,11 @@
  * Copyright (C) 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
-package author.gamename.level.tile;
+package vulc.engine.level.tile;
 
-import author.gamename.gfx.Screen;
-import author.gamename.level.Level;
-import author.gamename.level.entity.Entity;
+import vulc.engine.gfx.Screen;
+import vulc.engine.level.Level;
+import vulc.engine.level.entity.Entity;
 
 public abstract class Tile {
 

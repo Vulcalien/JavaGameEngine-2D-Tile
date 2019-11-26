@@ -2,7 +2,7 @@
  * Copyright (C) 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
-package author.gamename;
+package vulc.engine;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -13,9 +13,9 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import author.gamename.gfx.Screen;
-import author.gamename.input.InputHandler;
-import author.gamename.level.Level;
+import vulc.engine.gfx.Screen;
+import vulc.engine.input.InputHandler;
+import vulc.engine.level.Level;
 
 public class Game extends Canvas implements Runnable {
 

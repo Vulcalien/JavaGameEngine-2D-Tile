@@ -2,7 +2,7 @@
  * Copyright 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
-package author.gamename.input;
+package vulc.engine.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import author.gamename.Game;
+import vulc.engine.Game;
 
 public class InputHandler implements KeyListener, MouseListener {
 

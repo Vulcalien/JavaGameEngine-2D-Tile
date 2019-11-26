@@ -2,15 +2,15 @@
  * Copyright (C) 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
-package author.gamename.level;
+package vulc.engine.level;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import author.gamename.Game;
-import author.gamename.gfx.Screen;
-import author.gamename.level.entity.Entity;
-import author.gamename.level.tile.Tile;
+import vulc.engine.Game;
+import vulc.engine.gfx.Screen;
+import vulc.engine.level.entity.Entity;
+import vulc.engine.level.tile.Tile;
 
 public class Level {
 
