@@ -75,7 +75,7 @@ public class Game extends Canvas implements Runnable {
 		screen.render();
 
 		for(int i = 0; i < pixels.length; i++) {
-			pixels[i] = screen.pixels[i];
+			pixels[i] = screen.raster.getPixel(i);
 		}
 
 		Graphics g = bs.getDrawGraphics();

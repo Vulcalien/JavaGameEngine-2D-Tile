@@ -17,7 +17,7 @@ public abstract class Entity {
 	public boolean removed = false;
 
 	public int x, y;
-	// xr is half of the width, yr is half of the height
+	// xr: x-radius, yr: y-radius
 	public int xr, yr;
 
 	public void tick() {

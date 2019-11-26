@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 Vulcalien
+ * Copyright 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
 package author.gamename.input;
@@ -28,6 +28,8 @@ public class InputHandler implements KeyListener, MouseListener {
 	private final List<Key> mouseKeys = new ArrayList<Key>();
 
 	public void init(Game game) {
+		game.setFocusTraversalKeysEnabled(false);
+
 		game.addKeyListener(this);
 		game.addMouseListener(this);
 

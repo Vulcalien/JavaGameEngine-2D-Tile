@@ -27,8 +27,10 @@ public class Level {
 	@SuppressWarnings("unchecked")
 	public Level(Game game, int width, int height) {
 		this.game = game;
+
 		this.width = width;
 		this.height = height;
+
 		this.tiles = new byte[width * height];
 		this.entitiesInTile = new ArrayList[width * height];
 		for(int i = 0; i < entitiesInTile.length; i++) {
