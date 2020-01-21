@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (C) 2019 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
 package vulc.engine.level.entity.particle;
@@ -14,7 +13,7 @@ public abstract class Particle extends Entity {
 	public Particle(int lifeTime, int x, int y) {
 		this.lifeTime = lifeTime;
 		remainingTime = lifeTime;
-		
+
 		this.x = x;
 		this.y = y;
 	}
