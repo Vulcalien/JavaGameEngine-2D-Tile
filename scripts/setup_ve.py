@@ -51,7 +51,7 @@ for f in files:
     if(not f in IGNORED_FOLDERS):
         shutil.move(temp_folder + '/' + f, dest_folder)
 
-os.removedirs(temp_folder)
+shutil.rmtree(temp_folder)
 
 RES_FOLDERS = ('fonts', 'gfx', 'sfx')
 
