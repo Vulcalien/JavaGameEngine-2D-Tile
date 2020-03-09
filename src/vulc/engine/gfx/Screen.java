@@ -11,7 +11,7 @@ import vulc.engine.level.Level;
 
 public class Screen extends IntBitmap {
 
-	public static final Font FONT = new Font(Screen.class.getResourceAsStream("/fonts/linkwriter-monospaced.lwfont"));
+	public static final Font FONT = new Font(Screen.class.getResourceAsStream("/fonts/tinyfont.fv4"));
 
 	private static final int BACKGROUND_COLOR = 0x000000;
 
@@ -22,6 +22,8 @@ public class Screen extends IntBitmap {
 	public Screen(Game game) {
 		super(Game.WIDTH, Game.HEIGHT);
 		this.game = game;
+
+		setFont(FONT);
 	}
 
 	public void render() {
