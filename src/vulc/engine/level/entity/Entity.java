@@ -8,7 +8,6 @@ import java.util.List;
 
 import vulc.engine.gfx.Screen;
 import vulc.engine.level.Level;
-import vulc.engine.level.tile.Tile;
 
 public abstract class Entity {
 
@@ -48,9 +47,6 @@ public abstract class Entity {
 		if(xm == 0 && ym == 0) return true;
 		if(xm != 0 && ym != 0) throw new RuntimeException("Error: move2 moves only in one axis");
 
-		int xtc = Level.posToTile(x);
-		int ytc = Level.posToTile(y);
-
 		int x0 = x - xr;
 		int y0 = y - yr;
 		int x1 = x + xr - 1;
@@ -61,51 +57,23 @@ public abstract class Entity {
 		int xto1 = Level.posToTile(x1 + xm);
 		int yto1 = Level.posToTile(y1 + ym);
 
-		boolean blocked = false;
-		int xBlockTile = -1, yBlockTile = -1;
-
-		for(int yt = yto0; yt <= yto1; yt++) {
-			for(int xt = xto0; xt <= xto1; xt++) {
-				Tile tile = null;
-				boolean isOutOfLevel = false;
-
-				if(xt < 0 || xt >= level.width || yt < 0 || yt >= level.height) {
-					isOutOfLevel = true;
-				} else {
-					tile = level.getTile(xt, yt);
-				}
-
-				if(isOutOfLevel || !tile.mayPass(this, xm, ym, level, xt, yt)) {
-					if(blocked) {
-						if(Math.abs(xt - xtc) < Math.abs(xBlockTile - xtc)
-						   || Math.abs(yt - ytc) < Math.abs(yBlockTile - ytc)) {
-							xBlockTile = xt;
-							yBlockTile = yt;
-						}
+		for(int xt = xto0; xt <= xto1; xt++) {
+			for(int yt = yto0; yt <= yto1; yt++) {
+				if(xt < 0 || yt < 0 || xt >= level.width || yt >= level.height
+				   || !level.getTile(xt, yt).mayPass(this, xm, ym, level, xt, yt)) {
+					if(xm != 0) {
+						if(xm < 0) return move2(Level.tileToPos(xt + 1) - x0, 0, touchedEntities);
+						else return move2(Level.tileToPos(xt) - x1 - 1, 0, touchedEntities);
 					} else {
-						blocked = true;
-						xBlockTile = xt;
-						yBlockTile = yt;
+						if(ym < 0) return move2(0, Level.tileToPos(yt + 1) - y0, touchedEntities);
+						else return move2(0, Level.tileToPos(yt) - y1 - 1, touchedEntities);
 					}
 				}
 			}
 		}
 
-		if(blocked) {
-			if(xm != 0) {
-				if(xm < 0) xm = Level.tileToPos(xBlockTile + 1) - x0;
-				else xm = Level.tileToPos(xBlockTile) - x1 - 1;
-			} else {
-				if(ym < 0) ym = Level.tileToPos(yBlockTile + 1) - y0;
-				else ym = Level.tileToPos(yBlockTile) - y1 - 1;
-			}
-
-			if(xm == 0 && ym == 0) return false;
-			blocked = false;
-		}
-
-		List<Entity> isInside = level.getEntities(x0 + xm, y0 + ym, x1 + xm, y1 + ym);
 		List<Entity> wasInside = level.getEntities(x0, y0, x1, y1);
+		List<Entity> isInside = level.getEntities(x0 + xm, y0 + ym, x1 + xm, y1 + ym);
 		isInside.removeAll(wasInside);
 
 		List<Entity> blockingEntities = new ArrayList<Entity>();
@@ -115,14 +83,14 @@ public abstract class Entity {
 			if(e == this) continue;
 
 			if(this.isBlockedBy(e) && e.blocks(this)) {
-				blocked = true;
 				blockingEntities.add(e);
 			}
 		}
 
-		if(blocked) {
+		if(blockingEntities.size() > 0) {
 			Entity blockEntity = null;
 			List<Entity> touchedBlockingEntities = new ArrayList<Entity>();
+
 			for(int i = 0; i < blockingEntities.size(); i++) {
 				Entity e = blockingEntities.get(i);
 
@@ -186,9 +154,6 @@ public abstract class Entity {
 				if(ym < 0) ym = (blockEntity.y + blockEntity.yr) - y0;
 				else ym = (blockEntity.y - blockEntity.yr) - y1 - 1;
 			}
-
-			if(xm == 0 && ym == 0) return false;
-			blocked = false;
 		}
 
 		x += xm;
