@@ -42,9 +42,9 @@ public abstract class Entity {
 		return new boolean[] {xMoved, yMoved};
 	}
 
-	// returns false if totally blocked by something and no movement is made
+	// returns false if no movement is made
 	private boolean move2(int xm, int ym, List<Entity> touchedEntities) {
-		if(xm == 0 && ym == 0) return true;
+		if(xm == 0 && ym == 0) return false;
 		if(xm != 0 && ym != 0) throw new RuntimeException("Error: move2 moves only in one axis");
 
 		int x0 = x - xr;
@@ -154,6 +154,8 @@ public abstract class Entity {
 				if(ym < 0) ym = (blockEntity.y + blockEntity.yr) - y0;
 				else ym = (blockEntity.y - blockEntity.yr) - y1 - 1;
 			}
+
+			if(xm == 0 && ym == 0) return false;
 		}
 
 		x += xm;
