@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2019 Vulcalien
+ * Copyright 2019-2020 Vulcalien
  * This code or part of it is licensed under MIT License by Vulcalien
  ******************************************************************************/
 package vulc.engine;
