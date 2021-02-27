@@ -6,33 +6,17 @@ package vulc.engine.gfx;
 import vulc.bitmap.Bitmap;
 import vulc.bitmap.IntBitmap;
 import vulc.bitmap.font.Font;
-import vulc.engine.Game;
-import vulc.engine.level.Level;
 
 public class Screen extends IntBitmap {
 
 	public static final Font FONT = new Font(Screen.class.getResourceAsStream("/fonts/tinyfont.fv4"));
 
-	private static final int BACKGROUND_COLOR = 0x000000;
-
-	private final Game game;
-
 	public int xOffset = 0, yOffset = 0;
 
-	public Screen(Game game) {
-		super(Game.WIDTH, Game.HEIGHT);
-		this.game = game;
+	public Screen(int width, int height, int[] pixels) {
+		super(width, height, pixels);
 
 		setFont(FONT);
-	}
-
-	public void render() {
-		clear(BACKGROUND_COLOR);
-
-		Level level = game.level;
-		if(level != null) {
-			level.render(this, 10, 10);
-		}
 	}
 
 	public void setOffset(int x, int y) {
