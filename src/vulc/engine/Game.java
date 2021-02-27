@@ -6,12 +6,13 @@ package vulc.engine;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-
-import javax.swing.JFrame;
 
 import vulc.engine.gfx.Screen;
 import vulc.engine.input.InputHandler;
@@ -21,10 +22,10 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	// the size of the game screen (not the JFrame)
+	// the size of the game screen (not the Frame)
 	public static final int WIDTH = 320, HEIGHT = 320;
 
-	// the number of JFrame's pixels that correspond to 1 pixel of the game screen
+	// the number of Frame's pixels that correspond to 1 pixel of the game screen
 	public static final int SCALE = 1;
 
 	private final BufferedImage img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -135,8 +136,12 @@ public class Game extends Canvas implements Runnable {
 		instance.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		instance.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
-		JFrame frame = new JFrame("game name");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Frame frame = new Frame("game name");
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			};
+		});
 		frame.setResizable(false);
 
 		frame.add(instance);
