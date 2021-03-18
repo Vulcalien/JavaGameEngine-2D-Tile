@@ -20,18 +20,18 @@ public abstract class Game {
 	// the number of Frame's pixels that correspond to 1 pixel of the game screen
 	public static final int SCALE = 1;
 
-	protected static GameFrame frame;
+	public static final InputHandler INPUT = new InputHandler();
 
-	public static final InputHandler input = new InputHandler();
+	protected static GameFrame frame;
 
 	public static Level level;
 
 	private static void init() {
-		input.init(frame.canvas);
+		INPUT.init(frame.canvas);
 	}
 
 	public static void tick() {
-		input.tick();
+		INPUT.tick();
 
 		if(level != null) level.tick();
 	}

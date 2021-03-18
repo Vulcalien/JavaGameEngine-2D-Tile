@@ -6,7 +6,6 @@ package vulc.engine.level;
 import java.util.ArrayList;
 import java.util.List;
 
-import vulc.engine.Game;
 import vulc.engine.gfx.Screen;
 import vulc.engine.level.entity.Entity;
 import vulc.engine.level.tile.Tile;
@@ -16,17 +15,13 @@ public class Level {
 	// Tile size: the number of pixels per tile
 	public static final int T_SIZE = 32;
 
-	public final Game game;
-
 	public final int width, height;
 	public final byte[] tiles;
 	public final List<Entity> entities = new ArrayList<Entity>();
 	public final List<Entity>[] entitiesInTile;
 
 	@SuppressWarnings("unchecked")
-	public Level(Game game, int width, int height) {
-		this.game = game;
-
+	public Level(int width, int height) {
 		this.width = width;
 		this.height = height;
 
