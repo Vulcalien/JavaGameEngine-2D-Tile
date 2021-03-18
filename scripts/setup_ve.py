@@ -1,5 +1,6 @@
-# Copyright 2020 Vulcalien
+#!/usr/bin/env python3
 
+# Copyright 2020-2021 Vulcalien
 # Download and install the lastest version of Vulc-Engine
 
 import sys
